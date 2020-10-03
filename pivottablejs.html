@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PivotTable.js</title>
+
+        <!-- external libs from cdnjs -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/pivot.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/pivot.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/d3_renderers.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/c3_renderers.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/export_renderers.min.js"></script>
+
+        <style>
+            body {font-family: Verdana;}
+            .node {
+              border: solid 1px white;
+              font: 10px sans-serif;
+              line-height: 12px;
+              overflow: hidden;
+              position: absolute;
+              text-indent: 2px;
+            }
+            .c3-line, .c3-focused {stroke-width: 3px !important;}
+            .c3-bar {stroke: white !important; stroke-width: 1;}
+            .c3 text { font-size: 12px; color: grey;}
+            .tick line {stroke: white;}
+            .c3-axis path {stroke: grey;}
+            .c3-circle { opacity: 1 !important; }
+            .c3-xgrid-focus {visibility: hidden !important;}
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            $(function(){
+                if(window.location != window.parent.location)
+                    $("<a>", {target:"_blank", href:""})
+                        .text("[pop out]").prependTo($("body"));
+
+                $("#output").pivotUI(
+                    $.csv.toArrays($("#output").text()),
+                    $.extend({
+                        renderers: $.extend(
+                            $.pivotUtilities.renderers,
+                            $.pivotUtilities.c3_renderers,
+                            $.pivotUtilities.d3_renderers,
+                            $.pivotUtilities.export_renderers
+                            ),
+                        hiddenAttributes: [""]
+                    }, {})
+                ).show();
+             });
+        </script>
+        <div id="output" style="display: none;">,game,hours_played,metascore,user_score,score
+0,Dota 2,981684.5999999989,90,65,201.5
+1,Football Manager 2013,32308.6,86,68,41.0
+2,Football Manager 2012,30845.799999999996,84,79,64.5
+3,Football Manager 2014,30574.799999999996,85,56,7.5
+4,Terraria,29951.799999999985,83,86,522.5
+5,Warframe,27074.599999999995,71,84,269.0
+6,Football Manager 2015,24283.100000000002,80,61,26.5
+7,Arma 3,24055.7,74,75,120.5
+8,Grand Theft Auto V,22956.70000000001,96,77,267.5
+9,Borderlands 2,22667.899999999994,89,82,424.5
+10,Rust,15275.299999999997,69,62,23.5
+11,War Thunder,14381.600000000004,81,65,-5.5
+12,Fallout 4,10762.800000000003,84,55,-215.5
+13,Path of Exile,10185.600000000002,86,81,292.0
+14,Europa Universalis IV,9759.0,87,87,185.5
+15,Portal 2,9117.099999999997,95,90,1786.0
+16,Crusader Kings II,9020.7,82,88,200.0
+17,Rocket League,7827.200000000002,86,82,131.5
+18,H1Z1,7364.200000000001,70,41,5.5
+19,Euro Truck Simulator 2,7226.899999999999,79,87,209.0
+20,Torchlight II,6891.9,88,85,491.0
+21,PlanetSide 2,6239.700000000002,84,70,207.0
+22,The Binding of Isaac,5458.099999999999,84,84,217.0
+23,Kerbal Space Program,5334.499999999999,88,82,117.5
+24,Starbound,5189.8,81,71,55.0
+25,Far Cry 3,5076.000000000002,88,83,478.5
+26,DC Universe Online,4674.7,72,68,52.0
+27,Dungeon Defenders,3816.2000000000007,81,73,90.5
+28,BioShock Infinite,3689.1000000000013,94,86,1174.5
+29,Don't Starve,3581.9,79,83,192.0
+30,Neverwinter,3451.4999999999995,74,53,7.0
+31,Marvel Heroes 2015,3219.800000000001,81,82,167.0
+32,Tomb Raider,3184.3,86,85,563.0
+33,Dishonored,2842.2,91,84,510.5
+34,Banished,2630.999999999999,73,81,139.5
+35,Mortal Kombat X,2598.099999999999,76,55,3.5
+36,Saints Row IV,2563.0,86,74,215.5
+37,Assassin's Creed III,2545.3999999999996,80,63,66.0
+38,Dead Island,2532.0000000000005,80,69,184.5
+39,Pro Evolution Soccer 2015,2500.5,82,56,1.0
+40,Natural Selection 2,2498.899999999999,80,85,204.5
+41,TERA,2388.0999999999995,77,69,185.0
+42,Insurgency,2317.1000000000004,74,86,165.5
+43,Football Manager 2016,2296.6,81,69,30.5
+44,Dying Light,2212.5999999999995,75,79,216.0
+45,Farming Simulator 2013,2139.2,65,75,14.5
+46,Warface,2108.099999999998,62,42,-8.5
+47,Magicka,2053.8,74,76,137.0
+48,Farming Simulator 15,2050.3,64,74,15.0
+49,Sleeping Dogs,1965.8999999999999,81,83,218.5
+50,Company of Heroes 2,1955.0000000000005,80,21,-699.0
+51,Max Payne 3,1941.3999999999996,87,77,225.5
+52,Sniper Elite V2,1845.8000000000004,66,67,77.0
+53,Tropico 4,1726.6000000000001,78,78,83.0
+54,The Forest,1695.1999999999998,83,73,49.5
+55,Anno 2070,1618.1,83,71,62.5
+56,Killing Floor 2,1594.8999999999999,75,76,25.5
+57,Pillars of Eternity,1523.2,89,83,392.0
+58,Endless Space,1498.6,77,73,105.0
+59,Defiance,1433.6,64,66,110.5
+60,HAWKEN,1416.2999999999997,73,77,61.5
+61,Loadout,1399.8,72,73,92.5
+62,Dirty Bomb,1390.3000000000004,63,77,61.0
+63,Mortal Kombat Komplete Edition,1324.2999999999995,81,87,97.5
+64,Endless Legend,1288.1000000000001,82,79,114.5
+65,Darksiders II,1282.8000000000004,81,79,109.0
+66,Far Cry 4,1251.7000000000003,80,68,119.0
+67,Orcs Must Die! 2,1200.8999999999996,83,79,116.0
+68,F1 2012,1125.5,80,71,18.5
+69,Age of Wonders III,1121.3000000000002,80,80,119.5
+70,ArcheAge,1109.7000000000003,80,37,-164.0
+71,The Crew,1099.9,71,63,31.5
+72,Alan Wake,1045.0000000000005,83,80,208.0
+73,Firefall,978.9999999999997,60,67,66.5
+74,Space Pirates and Zombies,955.2000000000003,74,76,53.0
+75,GRID 2,943.7999999999998,80,58,-2.0
+76,Goat Simulator,923.0999999999996,62,66,88.5
+77,State of Decay,906.8999999999997,79,69,78.5
+78,Rogue Legacy,866.9000000000001,85,79,120.5
+79,Game Dev Tycoon,866.1,68,80,239.5
+80,Trine 2,836.5,84,84,140.0
+81,Risk of Rain,828.5,77,81,62.5
+82,Planetary Annihilation,789.1999999999999,62,56,21.0
+83,Evolve,786.4999999999999,77,43,11.5
+84,Darkest Dungeon,781.3000000000002,84,78,110.0
+85,War of the Roses,761.8000000000001,73,58,13.0
+86,Dungeons of Dredmor,739.7,79,77,68.0
+87,SpeedRunners,735.8,84,76,17.0
+88,Galactic Civilizations III,727.1999999999999,81,66,43.5
+89,This War of Mine,722.1,83,84,164.0
+90,Test Drive Unlimited 2,692.9000000000001,72,57,12.5
+91,DiRT 3,691.9000000000002,86,70,54.0
+92,Broforce,688.3999999999999,83,80,61.5
+93,Age of Empires Online,665.5999999999999,70,57,29.5
+94,Bastion,651.9000000000003,86,85,332.0
+95,Tropico 5,642.1,75,70,52.5
+96,Thief,637.7,70,59,111.0
+97,Star Conflict,636.8,75,70,23.0
+98,SMITE,626.3000000000002,83,82,161.5
+99,BattleBlock Theater,625.7000000000002,85,79,42.0
+100,Sonic Generations,598.5,77,83,108.0
+101,Super Monday Night Combat,576.0999999999999,76,37,13.0
+102,Fable III,570.6,75,55,18.0
+103,F1 2013,569.6,77,64,11.5
+104,Homefront,569.5000000000001,70,55,34.5
+105,Orcs Must Die!,566.8000000000001,83,81,123.0
+106,Scribblenauts Unlimited,553.9000000000001,75,77,36.0
+107,Out of the Park Baseball 15,549.1999999999999,89,72,21.0
+108,Ace of Spades,521.2,49,52,-32.5
+109,Hotline Miami,518.2000000000002,85,86,260.0
+110,Primal Carnage,513.6999999999999,67,76,35.0
+111,Guns of Icarus Online,497.79999999999995,64,78,66.5
+112,Ori and the Blind Forest,496.99999999999994,88,87,140.0
+113,Wasteland 2,491.9000000000001,81,73,203.5
+114,The Escapists,480.9999999999999,71,70,26.5
+115,Cities XL 2012,472.0,61,56,6.5
+116,Shadowrun Returns,464.4000000000001,76,74,192.5
+117,Stronghold 3,457.59999999999997,47,30,-93.0
+118,Undertale,444.6000000000001,92,83,786.0
+119,The Wolf Among Us,435.9000000000001,80,88,81.5
+120,The Banner Saga,434.6,80,80,148.5
+121,The Talos Principle,426.1,85,86,150.0
+122,Mark of the Ninja,424.1000000000001,91,80,131.0
+123,Mad Max,423.79999999999995,73,78,159.5
+124,Duke Nukem Forever,414.6,54,58,145.5
+125,F.E.A.R. 3,410.4,74,58,42.5
+126,Legend of Grimrock,409.69999999999993,82,81,180.5
+127,The Incredible Adventures of Van Helsing,406.20000000000005,72,82,142.5
+128,Two Worlds II,405.90000000000015,76,64,52.5
+129,How to Survive,391.50000000000006,60,70,36.0
+130,Outlast,382.09999999999997,80,83,280.5
+131,Spelunky,378.8,90,72,40.5
+132,Homeworld Remastered Collection,375.7,86,82,75.0
+133,Dragon Age II,372.8,82,45,-466.0
+134,The Secret World,358.69999999999993,74,83,424.0
+135,Crypt of the NecroDancer,353.49999999999994,87,77,62.0
+136,Project CARS,339.1,83,71,83.0
+137,Worms Revolution,335.0,73,67,17.5
+138,The Long Dark,312.49999999999994,77,82,40.5
+139,Sanctum 2,304.00000000000006,77,76,40.0
+140,The Stanley Parable,303.30000000000007,88,80,276.5
+141,Bulletstorm,299.80000000000007,82,77,127.5
+142,Bloodline Champions,290.5,79,77,35.0
+143,Valkyria Chronicles,286.9,85,82,70.5
+144,"Papers, Please",283.4,85,85,241.5
+145,Assetto Corsa,283.29999999999995,85,84,67.5
+146,SpaceChem,282.29999999999995,84,85,56.5
+147,I Am Alive,282.20000000000005,66,60,-1.0
+148,X Rebirth,280.0,33,32,-365.0
+149,Dead Space 2,270.9,87,84,159.0
+150,Kenshi,266.7,78,80,28.5
+151,Nether,261.49999999999994,57,46,-13.0
+152,Cities in Motion,259.59999999999997,70,77,24.5
+153,GRID Autosport,259.1000000000001,78,63,36.0
+154,Block N Load,259.09999999999997,72,75,14.0
+155,The Darkness II,252.10000000000005,77,76,85.5
+156,Depth,248.5,65,77,28.0
+157,Blood Bowl 2,247.70000000000002,76,61,34.0
+158,LIMBO,244.59999999999988,88,81,218.5
+159,Verdun,243.20000000000002,70,77,36.0
+160,Blackguards,237.8,68,71,56.0
+161,Just Cause 3,229.49999999999997,74,56,61.5
+162,Grim Dawn,220.00000000000003,83,85,133.0
+163,Tactical Intervention,215.09999999999994,47,59,3.0
+164,From Dust,213.79999999999998,76,49,-12.0
+165,Reus,211.29999999999993,75,72,52.0
+166,Victor Vran,207.0,75,75,46.5
+167,Dungeon Siege III,196.7,72,47,-26.0
+168,Transistor,195.20000000000002,83,83,125.0
+169,Shadow Warrior,192.10000000000005,73,81,150.0
+170,DiRT Rally,189.7,86,87,72.5
+171,Little Inferno,188.3,68,75,47.0
+172,Tom Clancy's Rainbow Six Siege,184.89999999999998,79,71,118.5
+173,Guacamelee! Gold Edition,184.8,88,73,48.5
+174,StarDrive,180.0,61,68,89.5
+175,Pro Evolution Soccer 2014,178.9,74,44,-12.5
+176,Dungeon of the Endless,176.6,79,77,48.5
+177,Xenonauts,175.4,77,79,43.0
+178,Train Fever,174.7,67,69,17.0
+179,Child of Light,171.4,77,81,74.0
+180,Deponia,171.3,74,82,59.5
+181,LEGO Worlds,169.0,71,63,14.0
+182,Shovel Knight,166.7,85,80,110.5
+183,Pro Evolution Soccer 2016,164.0,76,42,-6.0
+184,Broken Age,157.3,76,69,19.0
+185,Sacred 3,156.5,57,15,-49.5
+186,Crysis 2,156.4,86,68,182.0
+187,Frozen Synapse,156.10000000000002,85,76,61.5
+188,The Incredible Adventures of Van Helsing II,155.49999999999994,77,76,51.5
+189,Democracy 3,152.9,70,71,19.0
+190,Darkspore,151.0,65,60,62.0
+191,Lost Planet 3,149.79999999999995,61,62,25.0
+192,Remember Me,149.39999999999998,65,74,166.0
+193,Poker Night 2,143.2,75,70,21.0
+194,Gunpoint,142.60000000000002,83,84,127.5
+195,SOMA,140.5,84,84,192.0
+196,Antichamber,139.39999999999998,82,82,132.0
+197,Black Mesa,137.3,86,89,107.0
+198,Trials Fusion,137.3,80,69,12.5
+199,The Evil Within,136.8,68,62,29.5
+200,Monday Night Combat,132.39999999999998,82,73,19.5
+201,Deadpool,131.0,63,76,93.0
+202,StarDrive 2,130.0,70,54,20.5
+203,Grey Goo,129.60000000000002,77,74,56.5
+204,Subnautica,128.89999999999998,87,84,150.5
+205,The Testament of Sherlock Holmes,127.90000000000002,73,79,24.5
+206,Nidhogg,124.99999999999999,81,68,51.5
+207,DiRT Showdown,124.60000000000001,72,57,7.5
+208,Rayman Origins,120.6,86,84,60.0
+209,F1 2015,113.4,61,39,-2.5
+210,War for the Overworld,111.69999999999999,65,78,23.0
+211,Sid Meier's Starships,110.7,64,43,23.5
+212,Infinite Crisis,110.59999999999998,68,67,9.5
+213,Audiosurf 2,110.30000000000001,76,71,10.5
+214,Rebel Galaxy,109.8,75,77,40.0
+215,LEGO Jurassic World,109.6,72,72,9.0
+216,Deadlight,108.60000000000002,78,74,39.0
+217,Lucius,106.89999999999998,59,61,11.5
+218,Mini Metro,106.2,77,77,18.5
+219,Fairy Fencer F,104.2,66,79,6.5
+220,Heroes of Might & Magic III - HD Edition,104.0,65,43,3.0
+221,Out of the Park Baseball 14,103.0,86,82,31.5
+222,Hydrophobia Prophecy,102.10000000000001,64,60,25.0
+223,Nuclear Dawn,101.50000000000001,71,76,52.0
+224,To the Moon,100.39999999999999,81,89,226.5
+225,Windward,99.4,61,69,12.0
+226,Shadowgate,99.2,68,71,19.5
+227,Starpoint Gemini 2,97.1,70,84,80.0
+228,Assassin's Creed Syndicate,96.4,74,61,17.0
+229,Five Nights at Freddy's,94.40000000000002,78,71,56.0
+230,Grow Home,93.5,75,73,53.0
+231,The Vanishing of Ethan Carter,92.60000000000001,82,80,166.5
+232,Dungeon Souls,92.4,67,55,3.0
+233,The Book of Unwritten Tales,89.6,82,83,61.0
+234,Dungeons 2,86.9,70,73,25.5
+235,"Invisible, Inc.",84.4,82,79,64.0
+236,Blackguards 2,83.5,74,74,45.0
+237,Sunless Sea,83.30000000000001,81,74,49.5
+238,Alan Wake's American Nightmare,82.59999999999998,73,66,27.0
+239,The Swapper,82.39999999999999,87,86,128.0
+240,Chaos on Deponia,81.7,78,83,42.0
+241,Gas Guzzlers Extreme,80.60000000000001,73,86,34.0
+242,Grim Fandango Remastered,80.50000000000001,84,80,61.0
+243,Solar 2,79.6,72,71,12.0
+244,Gotham City Impostors,78.80000000000001,65,66,36.5
+245,F1 2011,78.69999999999999,83,71,14.5
+246,Offworld Trading Company,78.5,78,74,36.5
+247,SteamWorld Dig,78.3,76,73,22.0
+248,FORCED,77.49999999999999,72,77,47.5
+249,Sid Meier's Ace Patrol,77.0,71,66,5.5
+250,CastleStorm,76.89999999999999,73,77,13.5
+251,Cities in Motion 2,75.89999999999999,72,73,32.5
+252,Hard Reset,75.69999999999999,73,73,97.5
+253,Mercenary Kings,75.6,76,65,11.0
+254,The Tiny Bang Story,74.8,63,72,12.0
+255,TowerFall Ascension,73.9,87,68,31.5
+256,F1 2014,73.8,61,48,9.5
+257,Krater,73.2,52,71,56.0
+258,Dustforce,72.10000000000001,79,77,52.0
+259,Shank 2,69.6,72,64,25.5
+260,The Amazing Spider-Man 2,68.9,57,55,2.5
+261,LISA,68.3,78,87,26.0
+262,Fractured Space,68.09999999999998,79,76,14.5
+263,Sheltered,66.89999999999999,62,45,5.5
+264,Minimum,66.7,69,65,8.0
+265,Stacking,66.30000000000001,80,77,17.5
+266,Cities XXL,65.7,47,17,-33.5
+267,Nuclear Throne,65.2,88,76,39.5
+268,Impire,65.2,45,54,-5.5
+269,The Legend of Korra,64.6,64,74,25.5
+270,Poly Bridge,64.6,73,69,6.5
+271,March of the Eagles,64.6,71,69,14.0
+272,Door Kickers,63.400000000000006,83,77,24.0
+273,Magicka 2,62.9,69,57,24.0
+274,Assassin's Creed Rogue,62.0,74,73,61.5
+275,Sacred Citadel,61.599999999999994,61,54,12.0
+276,Evoland,60.7,61,68,26.5
+277,Thomas Was Alone,60.49999999999999,77,81,90.0
+278,Quantum Conundrum,58.50000000000001,77,73,76.5
+279,Always Sometimes Monsters,57.1,73,72,28.0
+280,Enemy Front,57.099999999999994,52,57,-0.5
+281,Lifeless Planet,56.7,59,67,13.0
+282,Ys Origin,54.9,76,84,31.0
+283,Dragon's Prophet,54.4,63,59,3.0
+284,Take On Helicopters,52.6,70,67,14.0
+285,Infested Planet,51.8,75,77,18.5
+286,Legends of Eisenwald,50.8,71,77,18.5
+287,Runers,50.0,68,69,6.5
+288,Botanicula,49.3,82,83,88.0
+289,Gone Home,48.800000000000004,86,54,106.0
+290,Dead State,48.2,70,65,15.0
+291,Space Hulk,47.60000000000001,58,65,24.0
+292,Dungeonland,47.2,67,75,15.0
+293,MechWarrior Online,47.199999999999996,68,53,-67.5
+294,The Age of Decadence,47.0,81,80,44.0
+295,Guild of Dungeoneering,46.099999999999994,72,50,23.5
+296,Sorcerer King,45.4,75,62,12.5
+297,Hatoful Boyfriend,43.1,68,73,29.5
+298,Worms Clan Wars,42.79999999999999,73,69,13.0
+299,The Showdown Effect,42.50000000000001,67,70,17.5
+300,Sword Coast Legends,42.4,61,56,39.0
+301,ShootMania Storm,41.0,76,72,48.5
+302,Rock of Ages,40.69999999999999,74,77,32.0
+303,Space Hulk Ascension,40.599999999999994,72,73,17.0
+304,"Sir, You Are Being Hunted",39.699999999999996,63,65,21.0
+305,Rise of Incarnates,39.2,67,70,9.0
+306,Renegade Ops,38.699999999999996,76,75,18.0
+307,Ironcast,37.0,75,73,11.5
+308,Space Run,36.6,73,76,26.5
+309,Strike Suit Zero,36.3,66,73,49.0
+310,Cradle,34.9,65,76,8.5
+311,Binary Domain,34.3,68,77,50.0
+312,Blocks That Matter,33.199999999999996,72,73,18.0
+313,Strike Suit Infinity,33.1,66,70,16.0
+314,God Mode,32.599999999999994,58,68,29.5
+315,Road Redemption,32.3,70,72,15.5
+316,Dear Esther,32.1,75,65,87.5
+317,Pirates of Black Cove,31.900000000000002,56,58,6.5
+318,The Witcher Adventure Game,31.8,68,60,10.0
+319,The Baconing,30.4,63,52,5.0
+320,Satellite Reign,30.300000000000004,75,77,40.5
+321,Axiom Verge,30.299999999999997,80,77,26.0
+322,Rochard,30.1,81,79,40.0
+323,Goodbye Deponia,29.1,80,78,34.5
+324,Stealth Bastard Deluxe,28.900000000000002,80,78,14.5
+325,Waveform,28.5,81,74,16.0
+326,Take On Mars,28.4,62,76,4.5
+327,Big Pharma,28.4,72,63,10.5
+328,Papo & Yo,27.8,70,77,38.0
+329,The Book of Unwritten Tales 2,27.0,80,76,47.0
+330,Ancient Space,27.0,68,74,11.5
+331,Lethal League,26.8,82,77,19.0
+332,Rise of Venice,26.499999999999996,66,68,17.0
+333,Gray Matter,25.2,72,77,30.0
+334,Memento Mori 2,25.0,65,75,0.0
+335,Speedball 2 HD,24.400000000000002,53,38,-3.0
+336,Legends of Pegasus,24.4,36,15,-59.0
+337,Dreamfall Chapters,23.900000000000002,71,77,24.5
+338,Forge,23.8,65,76,81.5
+339,A Virus Named TOM,23.500000000000004,65,63,11.5
+340,The Swindle,23.0,70,51,16.0
+341,They Bleed Pixels,22.8,74,75,19.5
+342,Horizon,22.599999999999998,58,67,10.0
+343,Eldritch,22.1,77,68,20.5
+344,Zombie Army Trilogy,22.0,72,71,12.0
+345,Cloud Chamber,22.0,74,73,23.5
+346,Anno 2205,22.0,72,60,25.0
+347,F1 Race Stars,21.9,62,55,9.0
+348,NEO Scavenger,21.9,77,77,17.5
+349,Outland,21.6,83,73,9.0
+350,Volgarr the Viking,21.599999999999998,76,77,22.0
+351,Oil Rush,21.400000000000002,67,65,24.0
+352,Zack Zero,21.099999999999998,55,73,5.0
+353,Rise of the Triad,21.0,67,67,43.5
+354,Tryst,21.0,50,64,1.0
+355,The Golf Club,20.9,70,62,10.5
+356,Iron Brigade,20.5,75,53,4.0
+357,To End All Wars,20.1,71,75,12.5
+358,Angry Video Game Nerd Adventures,19.7,77,76,26.5
+359,Strider,19.7,78,75,25.0
+360,Abyss Odyssey,19.599999999999998,69,74,20.5
+361,Before the Echo,19.199999999999996,70,74,23.0
+362,Screencheat,18.9,71,73,6.0
+363,Anna's Quest,18.5,74,69,12.5
+364,Lara Croft and the Temple of Osiris,18.5,73,56,14.0
+365,Gemini Rue,18.5,82,84,63.0
+366,Her Story,18.199999999999996,86,60,66.0
+367,War of the Vikings,18.0,62,62,15.0
+368,Street Fighter X Tekken,17.9,79,63,15.0
+369,Act of Aggression,17.0,71,71,30.5
+370,The Night of the Rabbit,16.8,75,75,42.5
+371,The Masterplan,16.6,68,74,17.0
+372,Five Nights at Freddy's 3,16.4,68,69,28.5
+373,Lucius II,16.3,48,33,-5.0
+374,Party Hard,15.9,64,74,18.0
+375,PixelJunk Shooter,15.899999999999999,73,75,9.0
+376,Jazzpunk,15.799999999999999,75,77,55.0
+377,Prey,15.7,82,81,153.0
+378,Kingdom,15.399999999999999,74,76,24.0
+379,Fate of the World,15.0,70,76,14.0
+380,Apotheon,14.6,78,77,45.5
+381,Betrayer,14.499999999999998,62,72,34.5
+382,The Impossible Game,14.4,64,74,8.0
+383,Vessel,14.3,81,78,46.0
+384,Sengoku,14.3,70,68,29.0
+385,Joe Dever's Lone Wolf HD Remastered,14.3,78,68,14.0
+386,Home,14.2,69,60,5.5
+387,Armello,14.0,75,70,22.5
+388,DARK,13.8,41,42,-21.0
+389,Hack 'n' Slash,13.600000000000001,73,53,9.0
+390,Hatred,13.6,43,46,-37.5
+391,A Story About My Uncle,13.6,73,72,39.0
+392,Chroma Squad,13.4,75,77,29.5
+393,Element4l,13.3,77,77,14.0
+394,Hacknet,13.0,82,78,16.5
+395,Strike Vector,12.400000000000002,73,77,28.5
+396,Miasmata,11.8,76,77,39.5
+397,Shelter,11.700000000000001,69,72,26.0
+398,Primordia,11.600000000000001,72,88,66.5
+399,A Bird Story,11.6,66,69,20.5
+400,Urban Trial Freestyle,11.5,58,68,4.5
+401,OlliOlli,11.4,78,65,12.0
+402,The Detail,11.2,71,68,12.5
+403,Fortix 2,11.2,74,70,11.0
+404,Dex,10.8,62,77,18.0
+405,Castle In The Darkness,10.6,76,75,15.0
+406,Ironclad Tactics,10.5,69,72,11.5
+407,Convoy,10.5,72,55,11.5
+408,Among the Sleep,10.4,66,75,52.0
+409,The Cat Lady,9.799999999999999,81,87,47.0
+410,Q.U.B.E.,9.400000000000002,69,75,46.5
+411,Rush Bros,9.4,54,49,5.5
+412,The Incredible Adventures of Van Helsing III,9.299999999999999,64,65,25.5
+413,Shelter 2,9.200000000000001,58,69,6.5
+414,Anodyne,9.2,75,66,10.5
+415,Freedom Planet,9.100000000000001,83,83,35.5
+416,Way of the Samurai 4,9.0,72,72,10.0
+417,Road Not Taken,8.7,75,65,16.0
+418,The Beginner's Guide,8.6,76,76,52.0
+419,Clockwork Empires,8.5,58,35,2.0
+420,Layers of Fear,8.2,72,76,61.5
+421,Contrast,8.2,62,76,38.5
+422,Deadfall Adventures,8.100000000000001,53,70,14.5
+423,Journey of a Roach,8.1,65,69,14.5
+424,The Last Federation,8.0,72,69,8.0
+425,Nom Nom Galaxy,8.0,68,61,4.0
+426,Puzzle Agent 2,8.0,63,69,15.5
+427,Nihilumbra,7.9,75,65,15.0
+428,Symphony,7.8,75,77,22.5
+429,Anomaly 2,7.6,77,77,29.0
+430,Lilly Looking Through,7.5,71,68,6.0
+431,Lumino City,7.4,70,76,14.5
+432,Knock-knock,7.2,57,83,12.0
+433,Daylight,7.1,51,43,-12.5
+434,Dead Effect,7.000000000000001,59,62,7.5
+435,Cargo Commander,7.0,63,69,6.5
+436,Heavy Bullets,6.8,72,76,9.5
+437,Titan Souls,6.8,74,56,40.0
+438,A Valley Without Wind,6.699999999999999,54,68,7.5
+439,"War, the Game",6.5,65,71,5.0
+440,WRC 5,6.5,65,60,8.0
+441,Mega Man Legacy Collection,6.4,85,77,15.5
+442,SPACECOM,6.4,68,76,6.0
+443,Panzer Corps,6.2,80,75,28.5
+444,Monochroma,6.0,55,68,15.0
+445,The Novelist,5.9,66,60,15.5
+446,10 Second Ninja,5.9,72,74,9.0
+447,Tiny Troopers,5.7,57,57,1.0
+448,Yesterday,5.6,65,69,19.5
+449,Pro Evolution Soccer 2013,5.6,80,69,23.5
+450,DeadCore,5.5,78,68,17.0
+451,Neverending Nightmares,5.4,68,71,21.5
+452,Year Walk,5.4,87,70,24.5
+453,Redshirt,5.3,62,54,4.5
+454,Pride of Nations,5.3,70,56,9.5
+455,The Magic Circle,5.2,79,71,21.0
+456,Teslagrad,5.0,77,77,29.5
+457,Cortex Command,4.9,44,72,24.5
+458,Proteus,4.8999999999999995,80,56,18.0
+459,Randal's Monday,4.800000000000001,57,67,7.5
+460,Foul Play,4.7,69,59,8.5
+461,Armikrog,4.7,57,50,4.5
+462,Buzz Aldrin's Space Program Manager,4.5,62,66,8.0
+463,The Cursed Crusade,4.5,55,57,3.5
+464,Hamilton's Great Adventure,4.5,77,74,15.5
+465,The Fall,4.3,76,72,22.5
+466,Dungeon Hearts,4.2,73,64,4.5
+467,Dead Horde,4.199999999999999,45,51,-6.5
+468,No Time to Explain,4.1,54,61,5.0
+469,Trapped Dead,4.0,50,47,-7.0
+470,Tower of Guns,4.0,76,72,18.5
+471,Gemini Wars,3.8000000000000003,53,65,8.5
+472,Unmechanical,3.6999999999999997,74,78,33.0
+473,Confrontation,3.6,51,52,-1.5
+474,Downwell,3.5999999999999996,81,66,24.5
+475,Lume,3.5999999999999996,69,50,0.5
+476,Gomo,3.4,50,48,1.0
+477,Warhammer Quest,3.3,55,26,-2.0
+478,Retrovirus,3.3,70,67,10.0
+479,Deathtrap,3.1999999999999997,77,77,35.5
+480,Legend of Dungeon,3.1,62,75,13.5
+481,Dream,3.1,59,61,3.0
+482,Face Noir,3.1,59,63,8.0
+483,Incredipede,3.0999999999999996,74,69,10.5
+484,Kyn,3.0,58,53,5.0
+485,Pressure,3.0,64,69,8.5
+486,The Marvellous Miss Take,2.9000000000000004,69,64,10.5
+487,Assault Android Cactus,2.9,79,70,17.5
+488,Halfway,2.8,69,61,10.5
+489,NaissanceE,2.7,66,70,17.0
+490,Thirty Flights of Loving,2.6999999999999997,88,50,2.0
+491,Microsoft Flight,2.6,64,36,-5.0
+492,Achron,2.6,54,74,4.0
+493,Gigantic Army,2.5,73,64,8.5
+494,Else Heart.Break(),2.4,79,75,10.5
+495,Gods Will Be Watching,2.4,64,64,25.0
+496,Submerged,2.3,47,50,0.0
+497,Toybox Turbos,2.1,69,63,15.0
+498,Signal Ops,1.8,61,72,2.0
+499,Tetrobot and Co.,1.8,72,76,7.0
+500,Paper Sorcerer,1.6,73,67,8.0
+501,Thunder Wolves,1.6,69,71,14.0
+502,Black Mirror,1.6,60,56,5.5
+503,Super Time Force Ultra,1.6,80,65,14.5
+504,Unstoppable Gorg,1.6,73,67,23.0
+505,Back to Bed,1.6,57,59,3.5
+506,Battle Brothers,1.5,80,77,19.5
+507,Beyond Eyes,1.5,60,64,4.5
+508,The Inner World,1.3,72,77,22.0
+509,0RBITALIS,1.2,73,73,6.5
+510,A Golden Wake,1.2,68,60,12.0
+511,FLY'N,1.1,80,77,24.5
+512,Darkout,1.0,55,68,5.5
+513,Astebreed,0.8,86,73,28.0
+514,Volume,0.7,80,73,37.0
+515,Ashes of the Singularity,0.7,69,68,26.0
+516,Mushroom 11,0.7,78,72,18.5
+517,Sokobond,0.7,82,77,9.0
+518,Cloudbuilt,0.7,72,77,21.5
+519,RONIN,0.6,70,77,30.5
+520,MirrorMoon EP,0.6,73,55,7.5
+521,inMomentum,0.5,59,52,5.0
+522,Shad'O,0.5,68,66,8.0
+523,Gravity Ghost,0.5,75,77,14.5
+524,FRACT OSC,0.5,75,61,21.0
+525,Starseed Pilgrim,0.5,83,61,9.0
+526,Blood of the Werewolf,0.5,65,74,15.0
+527,Violett,0.4,61,73,6.5
+528,Snapshot,0.4,74,73,9.5
+529,Montague's Mount,0.4,39,50,-11.5
+530,Ignite,0.4,59,60,7.5
+531,The Yawhg,0.3,66,76,10.0
+532,The Bug Butcher,0.3,81,75,24.0
+533,Sublevel Zero,0.3,71,71,12.0
+534,Driftmoon,0.3,73,75,9.0
+535,Fist Puncher,0.3,73,75,13.0
+536,Etherium,0.3,62,63,6.5
+537,The Flame in the Flood,0.2,73,59,34.0
+538,LA Cops,0.2,45,61,-0.5
+539,Who's That Flying?!,0.2,76,67,7.5
+540,Gateways,0.2,72,77,7.0
+541,Formula Fusion,0.1,58,75,8.0
+542,BlazeRush,0.1,66,82,10.0
+543,Unity of Command,0.1,84,71,18.0
+</div>
+    </body>
+</html>
